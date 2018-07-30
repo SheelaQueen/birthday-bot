@@ -38,6 +38,7 @@ class Guild {
         }
 
         @Cmd
+        @Aliases(["disable", "stop"])
         @GuildAdminOnly
         @BasicPerms
         void remove(CommandEvent event) {
