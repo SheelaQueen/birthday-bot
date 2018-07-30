@@ -114,6 +114,9 @@ class Bot {
         if(dbGuild.birthdayRoleId) {
             def birthdayRole = guild.getRoleById(dbGuild.birthdayRoleId)
 
+            if(member.roles.contains(birthdayRole))
+                return
+
             if(selfMember.hasPermission(MANAGE_ROLES) && selfMember.canInteract(birthdayRole)) {
                 guild.controller.addSingleRoleToMember(member, birthdayRole).queue()
             } else {
@@ -143,6 +146,9 @@ class Bot {
 
         if(dbGuild.birthdayRoleId) {
             def birthdayRole = guild.getRoleById(dbGuild.birthdayRoleId)
+
+            if(!member.roles.contains(birthdayRole))
+                return
 
             if(selfMember.hasPermission(MANAGE_ROLES) && selfMember.canInteract(birthdayRole)) {
                 guild.controller.removeSingleRoleFromMember(member, birthdayRole).queue()

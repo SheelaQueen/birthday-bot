@@ -7,6 +7,7 @@ import co.vulpin.commando.annotations.Cmd
 import co.vulpin.commando.annotations.Optional
 import com.google.cloud.firestore.DocumentReference
 import com.google.cloud.firestore.SetOptions
+import decorators.BasicPerms
 
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
@@ -20,6 +21,7 @@ class User {
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, YYYY")
 
     @Cmd
+    @BasicPerms
     void set(CommandEvent event, String dayString, String monthString, String yearString, String gmtOffsetString) {
         def ref = Database.instance.getUserRef(event.author.id)
 
@@ -69,6 +71,7 @@ class User {
 
     @Cmd
     @Optional
+    @BasicPerms
     void get(CommandEvent event) {
         def dbUser = getUserRef(event).get().get().toObject(DbUser)
         def date = dbUser?.birthdayDate
@@ -81,6 +84,7 @@ class User {
 
     @Cmd
     @Aliases(["delete", "remove", "stop"])
+    @BasicPerms
     void remove(CommandEvent event) {
         getUserRef(event).delete()
         event.reply("Your birthday has been removed :wave: Sorry to see you go :pensive:").queue()

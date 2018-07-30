@@ -10,6 +10,7 @@ import com.google.cloud.firestore.DocumentReference
 import com.google.cloud.firestore.SetOptions
 import com.jagrosh.jdautilities.commons.utils.FinderUtil
 import co.vulpin.birthday.db.entities.Guild as DbGuild
+import decorators.BasicPerms
 
 @Aliases(["server"])
 @Optional
@@ -22,6 +23,7 @@ class Guild {
         @Cmd
         @GuildAdminOnly
         @Optional
+        @BasicPerms
         void set(CommandEvent event, String roleQuery) {
             def role = FinderUtil.findRoles(roleQuery, event.guild)[0]
 
@@ -37,6 +39,7 @@ class Guild {
 
         @Cmd
         @GuildAdminOnly
+        @BasicPerms
         void remove(CommandEvent event) {
             getGuildRef(event).set([
                 birthdayRoleId: null
@@ -47,6 +50,7 @@ class Guild {
 
         @Cmd
         @GuildAdminOnly
+        @BasicPerms
         void create(CommandEvent event) {
             def roleAction = event.guild.controller.createRole()
                     .setName(BIRTHDAY_CAKE)
@@ -61,6 +65,7 @@ class Guild {
 
         @Cmd
         @Optional
+        @BasicPerms
         void get(CommandEvent event) {
             def dbGuild = getGuildRef(event).get().get().toObject(DbGuild)
             if(dbGuild.birthdayRoleId) {
