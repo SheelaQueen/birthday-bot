@@ -1,14 +1,11 @@
-FROM openjdk:10-jre
+FROM 4.9.0-jre8-slim
 
 WORKDIR /etc/birthdaybot
 
 # Copy dir to the image
 COPY ./ ./
 
-# Make gradle wrapper executable
-RUN sudo chmod +x ./gradlew
-
 # Build jar
-RUN ./gradlew build
+RUN gradle build
 
 ENTRYPOINT java -jar ./Server/build/libs/BirthdayBot-all.jar
