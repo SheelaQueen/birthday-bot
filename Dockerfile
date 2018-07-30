@@ -7,7 +7,7 @@ COPY ./ ./
 
 # Make gradle wrapper executable
 USER root
-RUN sudo chmod +x ./gradlew
+RUN chmod +x ./gradlew
 
 # Build jar
 RUN ./gradlew build
