@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y sudo
 # creates the user
 RUN useradd -m birthdaybot
 # adds the user to the sudo group
-RUN adduser birthdaybot sudo
+RUN chpasswd && adduser birthdaybot sudo
 # switches to the birthdaybot user
 USER birthdaybot
 
