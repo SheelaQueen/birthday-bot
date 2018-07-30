@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter
 @Optional
 class User {
 
-    private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, YYYY")
+    private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, YYYY O")
 
     @Cmd
     @BasicPerms
@@ -60,7 +60,7 @@ class User {
     @BasicPerms
     void get(CommandEvent event) {
         def dbUser = getUserRef(event).get().get().toObject(DbUser)
-        def date = dbUser?.birthdayDate
+        def date = dbUser?.birthdayStart
         if(date) {
             event.reply(date.format(dateFormatter)).queue()
         } else {
