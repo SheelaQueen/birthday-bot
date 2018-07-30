@@ -17,8 +17,8 @@ class Database {
 
         def creds
 
-        def credsFile = new File(this.class.classLoader.getResource("firebase-credentials.json").file)
-        if(credsFile.exists())
+        def credsFile = this.class.classLoader.getResource("firebase-credentials.json")?.file
+        if(credsFile)
             creds = GoogleCredentials.fromStream(new FileInputStream(credsFile))
         else
             creds = GoogleCredentials.applicationDefault
