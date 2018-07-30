@@ -41,6 +41,20 @@ class Help {
                 false
             )
 
+            addBlankField(false)
+
+            addField(
+                "bday invite",
+                "Invites the bot to your server",
+                false
+            )
+
+            addField(
+                "bday support",
+                "Displays an invite to BirthdayBot's support server",
+                false
+            )
+
             build()
         }
 
