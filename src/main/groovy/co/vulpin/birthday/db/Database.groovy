@@ -16,8 +16,6 @@ class Database {
     Database() {
         def creds = GoogleCredentials.applicationDefault
 
-        GoogleCredentials.fromStream()
-
         def opts = FirestoreOptions.newBuilder()
                 .setCredentials(creds)
                 .setTimestampsInSnapshotsEnabled(true)
