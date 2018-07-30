@@ -14,14 +14,9 @@ class Database {
     private Firestore firestore
 
     Database() {
+        def creds = GoogleCredentials.applicationDefault
 
-        def creds
-
-        def credsFile = this.class.classLoader.getResource("firebase-credentials.json")?.file
-        if(credsFile)
-            creds = GoogleCredentials.fromStream(new FileInputStream(credsFile))
-        else
-            creds = GoogleCredentials.applicationDefault
+        GoogleCredentials.fromStream()
 
         def opts = FirestoreOptions.newBuilder()
                 .setCredentials(creds)
