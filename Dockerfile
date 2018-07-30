@@ -1,4 +1,4 @@
-FROM 4.9.0-jre8-slim
+FROM gradle:4.9.0-jre-slim
 
 WORKDIR /etc/birthdaybot
 
