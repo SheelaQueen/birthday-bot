@@ -1,0 +1,32 @@
+plugins {
+    id 'groovy'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+}
+
+mainClassName = 'co.vulpin.birthday.Main'
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+        url 'https://jitpack.io'
+        credentials { username 'jp_o1mmqpsg19kma89oa6jhv8bhls' }
+    }
+}
+
+dependencies {
+    // Language
+    compile group: 'org.codehaus.groovy',        name: 'groovy',                 version: '3.0.0-alpha-3'
+
+    // Logger
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.8.0-beta2'
+
+    // Database
+    compile group: 'com.google.cloud',           name: 'google-cloud-firestore', version: '0.55.1-beta'
+
+    // Discord + Utils
+    compile group: 'net.dv8tion',                name: 'JDA',                    version: '3.7.1_385'
+    compile group: 'com.jagrosh',                name: 'jda-utilities',          version: '2.1'
+    compile group: 'com.github.nikolaspikolas',  name: 'commando',               version: 'a92dd78'
+}
