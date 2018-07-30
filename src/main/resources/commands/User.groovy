@@ -70,6 +70,13 @@ class User {
     }
 
     @Cmd
+    @BasicPerms
+    void set(CommandEvent event) {
+        event.reply("Looks like your forgot a couple parameters! An example of the correct usage is:\n\n" +
+                "`bday set 30, 9, 1999, -4`").queue()
+    }
+
+    @Cmd
     @Optional
     @BasicPerms
     void get(CommandEvent event) {

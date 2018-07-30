@@ -23,9 +23,9 @@ class Help {
                 "Enters your birthday into the system.\n\n" +
                         "If you don't know what a GMT offset is, " +
                         "[click here](https://www.timeanddate.com/time/map/) and hover over your location " +
-                        "on the map. Your GMT offset is the value at the bottom that is highlighted. If " +
-                        "you the highlighted value at the bottom simply says `UTC`, then your GMT offset " +
-                        "is 0.",
+                        "on the map. Your GMT offset is the value at the bottom that is highlighted " +
+                        "(if the highlighted value at the bottom simply says `UTC`, then your GMT offset " +
+                        "is 0.).\n\nExample: `bday set 30, 9, 1999, -4`",
                 false
             )
 
