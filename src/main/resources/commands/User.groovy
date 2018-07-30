@@ -7,7 +7,6 @@ import co.vulpin.commando.annotations.Aliases
 import co.vulpin.commando.annotations.Cmd
 import co.vulpin.commando.annotations.Optional
 import com.google.cloud.firestore.DocumentReference
-import com.google.cloud.firestore.SetOptions
 import decorators.BasicPerms
 
 import java.time.LocalDate
@@ -38,20 +37,27 @@ class User {
             return
         }
 
+        if(ref.get().get().exists()) {
+            event.replyError("You have already set a birthday! " +
+                    "You cannot change your birthday once it has been set to prevent abuse. " +
+                    "If there has been a mistake, please contact **Nik#1234**.").queue()
+            return
+        }
+
         ref.set([
                 birthDay: date.dayOfMonth,
                 birthMonth: date.monthValue,
                 birthYear: date.year,
                 gmtOffset: date.offset.totalSeconds / 60 / 60 as int
-        ], SetOptions.merge())
+        ])
 
         event.reply("Successfully set up your birthday to **${date.format(dateFormatter)}**!").queue()
     }
 
     @Cmd
     @BasicPerms
-    void set(CommandEvent event) {
-        event.reply("Looks like your forgot a couple parameters! An example of the correct usage is:\n\n" +
+    void set(CommandEvent event, String ignored) {
+        event.reply("Looks like your forgot a couple parameters! An example of the correct usage is: " +
                 "`bday set 30, 9, 1999, -4`").queue()
     }
 
@@ -86,11 +92,6 @@ class User {
         def zone = ZoneOffset.ofHours(gmtOffset)
 
         def birthday = OffsetDateTime.of(date, time, zone)
-
-        def now = OffsetDateTime.now()
-
-        if(birthday.isAfter(now))
-            throw new IllegalArgumentException("The parsed date cannot be in the future!")
 
         return birthday
     }
