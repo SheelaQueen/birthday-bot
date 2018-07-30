@@ -17,6 +17,8 @@ class Guild {
 
     class Role {
 
+        private static final BIRTHDAY_CAKE = "\uD83C\uDF82"
+
         @Cmd
         @GuildAdminOnly
         @Optional
@@ -46,7 +48,10 @@ class Guild {
         @Cmd
         @GuildAdminOnly
         void create(CommandEvent event) {
-            event.guild.controller.createRole().setName("🎂").queue({
+            def roleAction = event.guild.controller.createRole()
+                    .setName(BIRTHDAY_CAKE)
+
+            roleAction.queue({
                 getGuildRef(event).set([
                     birthdayRoleId: it.id
                 ], SetOptions.merge())
