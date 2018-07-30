@@ -14,6 +14,7 @@ class Database {
     private Firestore firestore
 
     Database() {
+
         def creds = GoogleCredentials.applicationDefault
 
         def opts = FirestoreOptions.newBuilder()
@@ -22,6 +23,7 @@ class Database {
                 .build()
 
         firestore = opts.service
+
     }
 
     DocumentReference getGuildRef(String guildId) {
