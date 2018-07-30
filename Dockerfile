@@ -12,4 +12,4 @@ RUN chmod +x ./gradlew
 # Build jar
 RUN ./gradlew build
 
-ENTRYPOINT java -jar ./Server/build/libs/BirthdayBot-all.jar
+ENTRYPOINT java -jar ./build/libs/BirthdayBot-all.jar
