@@ -4,7 +4,6 @@ import co.vulpin.birthday.db.Database
 import co.vulpin.birthday.db.entities.User
 import co.vulpin.commando.Commando
 import co.vulpin.commando.prefix.DefaultPrefixSupplier
-import com.google.cloud.firestore.DocumentChange
 import com.google.cloud.firestore.DocumentSnapshot
 import net.dv8tion.jda.bot.sharding.DefaultShardManagerBuilder
 import net.dv8tion.jda.bot.sharding.ShardManager
@@ -16,6 +15,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.Future
 import java.util.concurrent.ScheduledExecutorService
 
+import static com.google.cloud.firestore.DocumentChange.Type.*
 import static java.util.concurrent.TimeUnit.MILLISECONDS
 import static net.dv8tion.jda.core.Permission.MANAGE_ROLES
 
@@ -56,9 +56,18 @@ class Bot {
                 return
 
             snap.documentChanges.each {
-                unhappyBirthday(it.document.id)
-                if(it.type != DocumentChange.Type.REMOVED)
-                    scheduleBirthday(it.document)
+                def doc = it.document
+                switch (it.type) {
+                    case ADDED:
+                        scheduleBirthday(doc)
+                        break
+                    case MODIFIED:
+                        unhappyBirthday(doc.id)
+                        scheduleBirthday(doc)
+                        break
+                    case REMOVED:
+                        unhappyBirthday(doc.id)
+                }
             }
         })
     }
