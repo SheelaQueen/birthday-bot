@@ -28,5 +28,5 @@ dependencies {
     // Discord + Utils
     compile group: 'net.dv8tion',                name: 'JDA',                    version: '3.7.1_385'
     compile group: 'com.jagrosh',                name: 'jda-utilities',          version: '2.1'
-    compile group: 'com.github.nikolaspikolas',  name: 'commando',               version: 'aa2e8c1'
+    compile group: 'com.github.nikolaspikolas',  name: 'commando',               version: '198596b'
 }
