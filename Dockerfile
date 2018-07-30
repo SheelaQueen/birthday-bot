@@ -1,9 +1,13 @@
 FROM openjdk:10-jre-slim
 
-RUN apt-get update && apt-get install -y sudo // installs sudo
-RUN useradd -m birthdaybot // creates the user
-RUN adduser birthdaybot sudo // adds the user to the sudo group
-USER birthdaybot // switches to the birthdaybot user
+// installs sudo
+RUN apt-get update && apt-get install -y sudo
+// creates the user
+RUN useradd -m birthdaybot
+// adds the user to the sudo group
+RUN adduser birthdaybot sudo
+// switches to the birthdaybot user
+USER birthdaybot
 
 WORKDIR /etc/birthdaybot
 
