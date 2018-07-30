@@ -9,7 +9,7 @@ import static net.dv8tion.jda.core.Permission.MESSAGE_WRITE
 
 class Support {
 
-    private static final SUPPORT_INVITE = "https://discord.gg/CCeDmg"
+    private static final SUPPORT_INVITE = "https://discord.gg/Uq7TqFc"
 
     @Cmd
     @Optional
