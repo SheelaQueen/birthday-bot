@@ -17,7 +17,7 @@ dependencies {
     compile group: 'org.codehaus.groovy',        name: 'groovy',                 version: '3.0.0-alpha-3'
 
     // Logger
-    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.8.0-beta2'
+    compile group: 'org.slf4j',                  name: 'slf4j-simple',           version: '1.8.0-beta2'
 
     // Database
     compile group: 'com.google.cloud',           name: 'google-cloud-firestore', version: '0.55.1-beta'
