@@ -34,7 +34,8 @@ class Bot {
 
         shardManager = new DefaultShardManagerBuilder()
             .setToken(token)
-            .addEventListeners(commando, new JoinListener(this))
+            .addEventListeners(commando)
+            .addEventListeners(new JoinListener(this), new ServerCountUpdater())
             .build()
 
         db.collection("users").addSnapshotListener({ snap, e ->
