@@ -79,7 +79,7 @@ class User {
     void get(CommandEvent event, String input) {
         def user = FinderUtil.findMembers(input, event.guild)[0]?.user
         if(!user) {
-            event.replyError("I couldn't find a person for that name :pensive:").queue()
+            event.replyError("I couldn't find a person for that input :pensive:").queue()
             return
         }
 
@@ -96,12 +96,12 @@ class User {
     void reset(CommandEvent event, String input) {
         def user = FinderUtil.findMembers(input, event.guild)[0]?.user
         if(!user) {
-            event.replyError("I couldn't find a person for that name :pensive:").queue()
+            event.replyError("I couldn't find a person for that input :pensive:").queue()
             return
         }
 
         getUserRef(user.id).delete()
-        event.reply("That user's birthday has been reset.").queue()
+        event.reply("${user.asMention}'s birthday has been reset.").queue()
     }
 
 // Temporarily disabled
