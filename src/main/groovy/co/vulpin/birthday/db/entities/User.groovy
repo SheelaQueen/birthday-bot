@@ -1,24 +1,17 @@
 package co.vulpin.birthday.db.entities
 
-import java.time.LocalDate
-import java.time.LocalTime
+import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 
 class User {
 
-    Integer birthDay, birthMonth, birthYear, gmtOffset
-
-    LocalDate getBirthdayDate() {
-        if(birthDay && birthMonth && birthYear)
-            return LocalDate.of(birthYear, birthMonth, birthDay)
-        else
-            return null
-    }
+    Long birthdayEpochSeconds
+    Integer gmtOffset
 
     OffsetDateTime getBirthdayStart() {
-        def time = LocalTime.of(0, 0)
-        return OffsetDateTime.of(birthdayDate, time, zoneOffset)
+        def instant = Instant.ofEpochSecond(birthdayEpochSeconds)
+        return OffsetDateTime.ofInstant(instant, zoneOffset)
     }
 
     OffsetDateTime getBirthdayEnd() {

@@ -45,10 +45,8 @@ class User {
         }
 
         ref.set([
-                birthDay: date.dayOfMonth,
-                birthMonth: date.monthValue,
-                birthYear: date.year,
-                gmtOffset: date.offset.totalSeconds / 60 / 60 as int
+            birthdayEpochSeconds: date.toEpochSecond(),
+            gmtOffset: date.offset.totalSeconds / 60 / 60 as int
         ])
 
         event.reply("Successfully set up your birthday to **${date.format(dateFormatter)}**!").queue()
@@ -74,7 +72,7 @@ class User {
         }
     }
 
-    @Cmd
+    //@Cmd // Temporarily disabled
     @Aliases(["delete", "remove", "stop"])
     @BasicPerms
     void remove(CommandEvent event) {
