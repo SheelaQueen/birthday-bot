@@ -6,6 +6,7 @@ import co.vulpin.commando.CommandEvent
 import co.vulpin.commando.annotations.Aliases
 import co.vulpin.commando.annotations.Cmd
 import co.vulpin.commando.annotations.Optional
+import co.vulpin.commando.annotations.check.OwnerOnly
 import com.google.cloud.firestore.DocumentReference
 import com.jagrosh.jdautilities.commons.utils.FinderUtil
 import decorators.BasicPerms
@@ -90,6 +91,19 @@ class User {
             event.reply("That person hasn't set a birthday yet!").queue()
     }
 
+    @Cmd
+    @Optional
+    @OwnerOnly
+    void reset(CommandEvent event, String input) {
+        def user = FinderUtil.findMembers(input, event.guild)[0]?.user
+        if(!user) {
+            event.replyError("I couldn't find a person for that name :pensive:").queue()
+            return
+        }
+
+        getUserRef(user.id).delete()
+        event.reply("That user's birthday has been reset.").queue()
+    }
 
 // Temporarily disabled
 //    @Cmd
