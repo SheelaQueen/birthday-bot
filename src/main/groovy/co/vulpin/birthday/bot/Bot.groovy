@@ -32,7 +32,8 @@ class Bot {
         def token = System.getenv("DISCORD_TOKEN")
 
         def prefix = System.getenv("DISCORD_PREFIX")
-        def commando = new Commando({ [ prefix ] })
+        def ownerId = System.getenv("DISCORD_OWNER_ID")
+        def commando = new Commando({ [ prefix ] }, ownerId)
 
         def game = Game.of(Game.GameType.DEFAULT, "$prefix help")
 
