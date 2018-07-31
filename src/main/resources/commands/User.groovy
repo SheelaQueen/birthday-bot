@@ -39,7 +39,7 @@ class User {
 
         if(ref.get().get().exists()) {
             event.replyError("You have already set a birthday! " +
-                    "You cannot change your birthday once it has been set to prevent abuse. " +
+                    "**You cannot change your birthday once it has been set to prevent abuse.** " +
                     "If there has been a mistake, please contact **Nik#1234**.").queue()
             return
         }
@@ -49,7 +49,7 @@ class User {
             gmtOffset: date.offset.totalSeconds
         ])
 
-        event.reply("Successfully set up your birthday to **${date.format(dateFormatter)}**!").queue()
+        event.reply("Successfully set your birthday to **${date.format(dateFormatter)}**!").queue()
     }
 
     @Cmd
@@ -72,13 +72,15 @@ class User {
         }
     }
 
-    //@Cmd // Temporarily disabled
-    @Aliases(["delete", "remove", "stop"])
-    @BasicPerms
-    void remove(CommandEvent event) {
-        getUserRef(event).delete()
-        event.reply("Your birthday has been removed :wave: Sorry to see you go :pensive:").queue()
-    }
+
+// Temporarily disabled
+//    @Cmd
+//    @Aliases(["delete", "remove", "stop"])
+//    @BasicPerms
+//    void remove(CommandEvent event) {
+//        getUserRef(event).delete()
+//        event.reply("Your birthday has been removed :wave: Sorry to see you go :pensive:").queue()
+//    }
 
     private OffsetDateTime parseDate(String day, String month, String year, String gmtOffset) {
         return parseDate(day as int, month as int, year as int, gmtOffset as int)
