@@ -6,6 +6,7 @@ import co.vulpin.commando.Commando
 import com.google.cloud.firestore.DocumentSnapshot
 import net.dv8tion.jda.bot.sharding.DefaultShardManagerBuilder
 import net.dv8tion.jda.bot.sharding.ShardManager
+import net.dv8tion.jda.core.entities.Game
 
 import java.time.Duration
 import java.time.OffsetDateTime
@@ -30,12 +31,16 @@ class Bot {
     Bot() {
         def token = System.getenv("DISCORD_TOKEN")
 
-        def commando = new Commando({ [ "bday" ] })
+        def prefix = System.getenv("DISCORD_PREFIX")
+        def commando = new Commando({ [ prefix ] })
+
+        def game = Game.of(Game.GameType.DEFAULT, "$prefix help")
 
         shardManager = new DefaultShardManagerBuilder()
             .setToken(token)
             .addEventListeners(commando)
             .addEventListeners(new JoinListener(this), new ServerCountUpdater())
+            .setGame(game)
             .build()
 
         db.collection("users").addSnapshotListener({ snap, e ->
