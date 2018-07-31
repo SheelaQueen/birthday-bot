@@ -7,6 +7,7 @@ import co.vulpin.commando.annotations.Aliases
 import co.vulpin.commando.annotations.Cmd
 import co.vulpin.commando.annotations.Optional
 import com.google.cloud.firestore.DocumentReference
+import com.jagrosh.jdautilities.commons.utils.FinderUtil
 import decorators.BasicPerms
 
 import java.time.LocalDate
@@ -24,7 +25,7 @@ class User {
     @Cmd
     @BasicPerms
     void set(CommandEvent event, String day, String month, String year, String gmtOffset) {
-        def ref = Database.instance.getUserRef(event.author.id)
+        def ref = getUserRef(event.author.id)
 
         def date
         try {
@@ -63,13 +64,30 @@ class User {
     @Optional
     @BasicPerms
     void get(CommandEvent event) {
-        def dbUser = getUserRef(event).get().get().toObject(DbUser)
+        def dbUser = getDbUser(event.author.id)
         def date = dbUser?.birthdayStart
-        if(date) {
+        if(date)
             event.reply(date.format(dateFormatter)).queue()
-        } else {
+        else
             event.reply("You haven't set a birthday yet!").queue()
+    }
+
+    @Cmd
+    @Optional
+    @BasicPerms
+    void get(CommandEvent event, String input) {
+        def user = FinderUtil.findMembers(input, event.guild)[0]?.user
+        if(!user) {
+            event.replyError("I couldn't find a person for that name :pensive:").queue()
+            return
         }
+
+        def dbUser = getDbUser(user.id)
+        def date = dbUser?.birthdayStart
+        if(date)
+            event.reply(date.format(dateFormatter)).queue()
+        else
+            event.reply("That person hasn't set a birthday yet!").queue()
     }
 
 
@@ -96,8 +114,13 @@ class User {
         return birthday
     }
 
-    private DocumentReference getUserRef(CommandEvent event) {
-        return Database.instance.getUserRef(event.author.id)
+    private DbUser getDbUser(String userId) {
+        def future = getUserRef(userId).get()
+        return future.get().toObject(DbUser)
+    }
+
+    private DocumentReference getUserRef(String userId) {
+        return Database.instance.getUserRef(userId)
     }
 
 }
