@@ -92,7 +92,6 @@ class User {
     }
 
     @Cmd
-    @Optional
     @OwnerOnly
     void reset(CommandEvent event, String input) {
         def user = FinderUtil.findMembers(input, event.guild)[0]?.user
