@@ -20,7 +20,7 @@ class Help {
 
             addField(
                 "bday set [day], [month], [year], [gmt offset]",
-                "Enters your birthday into the system.\n\n" +
+                "Enters your birthday into the system. **You cannot change this once it has been set!**\n\n" +
                         "If you don't know what a GMT offset is, " +
                         "[click here](https://www.timeanddate.com/time/map/) and hover over your location " +
                         "on the map. Your GMT offset is the value at the bottom that is highlighted " +
