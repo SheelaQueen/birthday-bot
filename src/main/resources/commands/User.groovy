@@ -104,15 +104,6 @@ class User {
         event.reply("${user.asMention}'s birthday has been reset.").queue()
     }
 
-// Temporarily disabled
-//    @Cmd
-//    @Aliases(["delete", "remove", "stop"])
-//    @BasicPerms
-//    void remove(CommandEvent event) {
-//        getUserRef(event).delete()
-//        event.reply("Your birthday has been removed :wave: Sorry to see you go :pensive:").queue()
-//    }
-
     private OffsetDateTime parseDate(String day, String month, String year, String gmtOffset) {
         return parseDate(day as int, month as int, year as int, gmtOffset as int)
     }
