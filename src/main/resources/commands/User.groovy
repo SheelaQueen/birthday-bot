@@ -105,13 +105,16 @@ class User {
     }
 
     private OffsetDateTime parseDate(String day, String month, String year, String gmtOffset) {
-        return parseDate(day as int, month as int, year as int, gmtOffset as int)
+        return parseDate(day as int, month as int, year as int, gmtOffset as double)
     }
 
-    private OffsetDateTime parseDate(int day, int month, int year, int gmtOffset) {
+    private OffsetDateTime parseDate(int day, int month, int year, double gmtOffset) {
         def date = LocalDate.of(year, month, day)
         def time = LocalTime.of(0, 0)
-        def zone = ZoneOffset.ofHours(gmtOffset)
+
+        def seconds = gmtOffset * 60 * 60 as int
+
+        def zone = ZoneOffset.ofTotalSeconds(seconds)
 
         def birthday = OffsetDateTime.of(date, time, zone)
 
