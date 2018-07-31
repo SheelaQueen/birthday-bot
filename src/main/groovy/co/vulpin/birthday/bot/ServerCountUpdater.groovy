@@ -19,13 +19,14 @@ class ServerCountUpdater extends ListenerAdapter {
             .botId(event.JDA.selfUser.id)
             .token(System.getenv("DBL_TOKEN"))
             .build()
+
+        postStats(event.JDA)
     }
 
     @Override
     void onGuildJoin(GuildJoinEvent event) {
         postStats(event.JDA)
     }
-
 
     @Override
     void onGuildLeave(GuildLeaveEvent event) {
