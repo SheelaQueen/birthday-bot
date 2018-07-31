@@ -55,6 +55,7 @@ class Guild {
         void create(CommandEvent event) {
             def roleAction = event.guild.controller.createRole()
                     .setName(BIRTHDAY_CAKE)
+                    .setHoisted(true)
 
             roleAction.queue({
                 getGuildRef(event).set([
