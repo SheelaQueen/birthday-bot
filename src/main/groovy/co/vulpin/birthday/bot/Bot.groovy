@@ -3,11 +3,9 @@ package co.vulpin.birthday.bot
 import co.vulpin.birthday.db.Database
 import co.vulpin.birthday.db.entities.User
 import co.vulpin.commando.Commando
-import co.vulpin.commando.prefix.DefaultPrefixSupplier
 import com.google.cloud.firestore.DocumentSnapshot
 import net.dv8tion.jda.bot.sharding.DefaultShardManagerBuilder
 import net.dv8tion.jda.bot.sharding.ShardManager
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent
 
 import java.time.Duration
 import java.time.OffsetDateTime
@@ -32,19 +30,7 @@ class Bot {
     Bot() {
         def token = System.getenv("DISCORD_TOKEN")
 
-        def prefixSupplier = new DefaultPrefixSupplier("bday") {
-            @Override
-            String getGuildPrefix(MessageReceivedEvent messageReceivedEvent) {
-                return null
-            }
-
-            @Override
-            String getUserPrefix(MessageReceivedEvent messageReceivedEvent) {
-                return null
-            }
-        }
-
-        def commando = new Commando(prefixSupplier)
+        def commando = new Commando({ [ "bday" ] })
 
         shardManager = new DefaultShardManagerBuilder()
             .setToken(token)
