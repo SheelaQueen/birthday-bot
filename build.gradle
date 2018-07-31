@@ -25,8 +25,8 @@ dependencies {
     // Discord + Utils
     compile group: 'net.dv8tion',                name: 'JDA',                    version: '3.7.1_385'
     compile group: 'com.jagrosh',                name: 'jda-utilities',          version: '2.1'
-    compile group: 'com.github.nikolaspikolas',  name: 'commando',               version: '0e8be9b'
-    compile group: 'com.github.nikolaspikolas',  name: 'commando-default',       version: 'e82fab9'
+    compile group: 'com.github.nikolaspikolas',  name: 'commando',               version: '8307085'
+    compile group: 'com.github.nikolaspikolas',  name: 'commando-default',       version: '25da4db'
 
     // DBL
     compile group: 'com.github.DiscordBotList',  name: 'DBL-Java-Library',       version: '2.0.0'
