@@ -9,10 +9,7 @@ mainClassName = 'co.vulpin.birthday.Main'
 repositories {
     mavenCentral()
     jcenter()
-    maven {
-        url 'https://jitpack.io'
-        credentials { username 'jp_o1mmqpsg19kma89oa6jhv8bhls' }
-    }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -28,5 +25,5 @@ dependencies {
     // Discord + Utils
     compile group: 'net.dv8tion',                name: 'JDA',                    version: '3.7.1_385'
     compile group: 'com.jagrosh',                name: 'jda-utilities',          version: '2.1'
-    compile group: 'com.github.nikolaspikolas',  name: 'commando',               version: '04a9131'
+    compile group: 'com.github.nikolaspikolas',  name: 'commando',               version: '5bbf4bd'
 }
