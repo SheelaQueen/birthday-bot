@@ -46,7 +46,7 @@ class User {
 
         ref.set([
             birthdayEpochSeconds: date.toEpochSecond(),
-            gmtOffset: date.offset.totalSeconds / 60 / 60 as int
+            gmtOffset: date.offset.totalSeconds
         ])
 
         event.reply("Successfully set up your birthday to **${date.format(dateFormatter)}**!").queue()

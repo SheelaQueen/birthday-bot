@@ -19,7 +19,7 @@ class User {
     }
 
     ZoneOffset getZoneOffset() {
-        return ZoneOffset.ofHours(gmtOffset)
+        return ZoneOffset.ofTotalSeconds(gmtOffset)
     }
 
 }
