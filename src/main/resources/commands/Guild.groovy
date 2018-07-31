@@ -1,16 +1,19 @@
 package commands
 
 import co.vulpin.birthday.db.Database
+import co.vulpin.birthday.db.entities.Guild as DbGuild
 import co.vulpin.commando.CommandEvent
 import co.vulpin.commando.annotations.Aliases
 import co.vulpin.commando.annotations.Cmd
 import co.vulpin.commando.annotations.Optional
+import co.vulpin.commando.annotations.check.BotPerms
 import co.vulpin.commando.annotations.check.GuildAdminOnly
 import com.google.cloud.firestore.DocumentReference
 import com.google.cloud.firestore.SetOptions
 import com.jagrosh.jdautilities.commons.utils.FinderUtil
-import co.vulpin.birthday.db.entities.Guild as DbGuild
 import decorators.BasicPerms
+
+import static net.dv8tion.jda.core.Permission.MANAGE_ROLES
 
 @Aliases(["server"])
 @Optional
@@ -52,6 +55,7 @@ class Guild {
         @Cmd
         @GuildAdminOnly
         @BasicPerms
+        @BotPerms([MANAGE_ROLES])
         void create(CommandEvent event) {
             def roleAction = event.guild.controller.createRole()
                     .setName(BIRTHDAY_CAKE)
