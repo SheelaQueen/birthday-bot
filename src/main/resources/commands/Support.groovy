@@ -9,13 +9,11 @@ import static net.dv8tion.jda.core.Permission.MESSAGE_WRITE
 
 class Support {
 
-    private static final SUPPORT_INVITE = "https://discord.gg/Uq7TqFc"
-
     @Cmd
     @Optional
     @BotPerms([MESSAGE_WRITE])
     void get(CommandEvent event) {
-        event.channel.sendMessage(SUPPORT_INVITE).queue()
+        event.channel.sendMessage(System.getenv("DISCORD_SUPPORT_SERVER_INVITE")).queue()
     }
 
 }

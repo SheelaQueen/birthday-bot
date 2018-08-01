@@ -6,10 +6,10 @@ import co.vulpin.commando.CommandEvent
 import co.vulpin.commando.annotations.Aliases
 import co.vulpin.commando.annotations.Cmd
 import co.vulpin.commando.annotations.Optional
-import co.vulpin.commando.annotations.check.OwnerOnly
 import com.google.cloud.firestore.DocumentReference
 import com.jagrosh.jdautilities.commons.utils.FinderUtil
 import decorators.BasicPerms
+import decorators.BirthdayBotAdminOnly
 
 import java.time.LocalDate
 import java.time.LocalTime
@@ -42,7 +42,8 @@ class User {
         if(ref.get().get().exists()) {
             event.replyError("You have already set a birthday! " +
                     "**You cannot change your birthday once it has been set to prevent abuse.** " +
-                    "If there has been a mistake, please contact **Nik#1234**.").queue()
+                    "If you have entered the wrong date, please contact a moderator in " +
+                    "[BirthdayBot Support](${System.getenv("DISCORD_SUPPORT_SERVER_INVITE")}).").queue()
             return
         }
 
@@ -92,7 +93,7 @@ class User {
     }
 
     @Cmd
-    @OwnerOnly
+    @BirthdayBotAdminOnly
     void reset(CommandEvent event, String input) {
         def user = FinderUtil.findUsers(input, event.JDA)[0]
         if(!user) {
