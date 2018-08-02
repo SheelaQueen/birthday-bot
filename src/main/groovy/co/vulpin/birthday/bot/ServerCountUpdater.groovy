@@ -34,7 +34,7 @@ class ServerCountUpdater extends ListenerAdapter {
     }
 
     private void postStats(JDA jda) {
-        api?.setStats(jda.guilds.size(), jda.shardInfo.shardId, jda.shardInfo.shardTotal)
+        api?.setStats(jda.shardInfo.shardId, jda.shardInfo.shardTotal, jda.guilds.size())
     }
 
 }
