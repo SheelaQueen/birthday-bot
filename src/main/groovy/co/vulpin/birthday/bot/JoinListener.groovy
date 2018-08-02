@@ -15,7 +15,7 @@ class JoinListener extends ListenerAdapter {
     @Override
     void onGuildMemberJoin(GuildMemberJoinEvent event) {
         def user = Database.instance.getUser(event.member.user.id)
-        if(user.isBirthday())
+        if(user?.isBirthday())
             bot.happyBirthday(event.guild.id, event.member.user.id)
     }
 
