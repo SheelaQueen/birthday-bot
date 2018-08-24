@@ -2,6 +2,8 @@ package co.vulpin.birthday.db
 
 import co.vulpin.birthday.db.entities.Guild
 import co.vulpin.birthday.db.entities.User
+import co.vulpin.firestore.sync.central.CentrallySyncedCollection
+import co.vulpin.firestore.sync.individual.IndividuallySyncedCollection
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.firestore.DocumentReference
 import com.google.cloud.firestore.Firestore
@@ -12,6 +14,9 @@ class Database {
 
     @Delegate
     private Firestore firestore
+
+    private CentrallySyncedCollection<User> users
+    private IndividuallySyncedCollection<Guild> guilds
 
     Database() {
 
@@ -24,6 +29,16 @@ class Database {
 
         firestore = opts.service
 
+        users = new CentrallySyncedCollection<>(collection("users"), User)
+        guilds = new IndividuallySyncedCollection<>(collection("guilds"), Guild)
+    }
+
+    IndividuallySyncedCollection<Guild> getGuilds() {
+        return guilds
+    }
+
+    CentrallySyncedCollection<User> getUsers() {
+        return users
     }
 
     DocumentReference getGuildRef(String guildId) {

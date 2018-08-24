@@ -13,9 +13,7 @@ class ServerCountUpdater extends ListenerAdapter {
 
     @Override
     void onReady(ReadyEvent event) {
-        // I could use the elvis assignment operator here
-        // but Intellij doesn't support it yet so it just cries that its invalid
-        api = api ?: new DiscordBotListAPI.Builder()
+        api ?= new DiscordBotListAPI.Builder()
             .botId(event.JDA.selfUser.id)
             .token(System.getenv("DBL_TOKEN"))
             .build()

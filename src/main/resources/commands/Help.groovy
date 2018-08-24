@@ -8,6 +8,8 @@ import net.dv8tion.jda.core.EmbedBuilder
 
 class Help {
 
+    private static final String SPACER = "\n\u200B"
+
     @Cmd
     @Optional
     @BasicPerms
@@ -25,7 +27,7 @@ class Help {
                         "[click here](https://www.timeanddate.com/time/map/) and hover over your location " +
                         "on the map. Your GMT offset is the value at the bottom that is highlighted " +
                         "(if the highlighted value at the bottom simply says `UTC`, then your GMT offset " +
-                        "is 0.).\n\nExample: `bday set 30, 9, 1999, -4`",
+                        "is 0.).\n\nExample: `bday set 30, 9, 1999, -4` $SPACER",
                 false
             )
 
@@ -37,11 +39,9 @@ class Help {
 
             addField(
                 "bday role create",
-                "Automatically creates a birthday role and stores it.",
+                "Automatically creates a birthday role and stores it. $SPACER",
                 false
             )
-
-            addBlankField(false)
 
             addField(
                 "bday invite",

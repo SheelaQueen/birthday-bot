@@ -1,10 +1,14 @@
 package co.vulpin.birthday.db.entities
 
+import co.vulpin.firestore.sync.central.CentrallySyncedEntity
+import groovy.transform.InheritConstructors
+
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 
-class User {
+@InheritConstructors
+class User extends CentrallySyncedEntity {
 
     Long birthdayEpochSeconds
     Integer gmtOffset
@@ -20,7 +24,7 @@ class User {
             end = end.plusYears(1)
         }
 
-        return now.isAfter(end)
+        return now.isAfter(start)
     }
 
     OffsetDateTime getBirthdayStart() {

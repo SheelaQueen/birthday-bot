@@ -1,6 +1,10 @@
 package co.vulpin.birthday.db.entities
 
-class Guild {
+import co.vulpin.firestore.sync.individual.IndividuallySyncedEntity
+import groovy.transform.InheritConstructors
+
+@InheritConstructors
+class Guild extends IndividuallySyncedEntity {
 
     String birthdayRoleId
 

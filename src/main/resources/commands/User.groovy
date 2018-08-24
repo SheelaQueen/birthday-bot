@@ -95,7 +95,9 @@ class User {
     @Cmd
     @BirthdayBotAdminOnly
     void reset(CommandEvent event, String input) {
-        def user = FinderUtil.findUsers(input, event.JDA)[0]
+        def user = FinderUtil.findMembers(input, event.guild)[0]?.user
+        user ?= FinderUtil.findUsers(input, event.JDA)[0]
+
         if(!user) {
             event.replyError("I couldn't find a person for that input :pensive:").queue()
             return
