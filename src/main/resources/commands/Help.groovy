@@ -39,7 +39,7 @@ class Help {
 
             addField(
                 "bday role create",
-                "Automatically creates a birthday role and stores it. $SPACER",
+                "Automatically creates a birthday role and stores it. $SPACERY",
                 false
             )
 
