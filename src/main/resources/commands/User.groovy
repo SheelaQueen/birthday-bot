@@ -63,7 +63,6 @@ class User {
     }
 
     @Cmd
-    @Optional
     @BasicPerms
     void get(CommandEvent event) {
         def dbUser = getDbUser(event.author.id)
@@ -75,7 +74,6 @@ class User {
     }
 
     @Cmd
-    @Optional
     @BasicPerms
     void get(CommandEvent event, String input) {
         def user = FinderUtil.findMembers(input, event.guild)[0]?.user
