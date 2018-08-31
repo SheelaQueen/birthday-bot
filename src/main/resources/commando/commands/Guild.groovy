@@ -1,4 +1,4 @@
-package commands
+package commando.commands
 
 import co.vulpin.birthday.db.Database
 import co.vulpin.birthday.db.entities.Guild as DbGuild
@@ -11,7 +11,7 @@ import co.vulpin.commando.annotations.check.GuildAdminOnly
 import com.google.cloud.firestore.DocumentReference
 import com.google.cloud.firestore.SetOptions
 import com.jagrosh.jdautilities.commons.utils.FinderUtil
-import decorators.BasicPerms
+import commando.decorators.BasicPerms
 
 import static net.dv8tion.jda.core.Permission.MANAGE_ROLES
 

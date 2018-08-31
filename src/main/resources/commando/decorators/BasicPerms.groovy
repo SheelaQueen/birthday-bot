@@ -1,4 +1,4 @@
-package decorators
+package commando.decorators
 
 import co.vulpin.commando.CommandEvent
 import com.github.yihtserns.groovy.decorator.Function

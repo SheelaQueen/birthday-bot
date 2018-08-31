@@ -1,4 +1,4 @@
-package commands
+package commando.commands
 
 import co.vulpin.commando.CommandEvent
 import co.vulpin.commando.annotations.Cmd

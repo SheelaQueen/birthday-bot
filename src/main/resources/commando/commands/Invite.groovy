@@ -1,9 +1,9 @@
-package commands
+package commando.commands
 
 import co.vulpin.commando.CommandEvent
 import co.vulpin.commando.annotations.Cmd
 import co.vulpin.commando.annotations.Optional
-import decorators.BasicPerms
+import commando.decorators.BasicPerms
 
 import static net.dv8tion.jda.core.Permission.*
 

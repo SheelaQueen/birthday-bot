@@ -1,4 +1,4 @@
-package commands
+package commando.commands
 
 import co.vulpin.birthday.db.Database
 import co.vulpin.birthday.db.entities.User as DbUser
@@ -8,8 +8,8 @@ import co.vulpin.commando.annotations.Cmd
 import co.vulpin.commando.annotations.Optional
 import com.google.cloud.firestore.DocumentReference
 import com.jagrosh.jdautilities.commons.utils.FinderUtil
-import decorators.BasicPerms
-import decorators.BirthdayBotAdminOnly
+import commando.decorators.BasicPerms
+import commando.decorators.BirthdayBotAdminOnly
 
 import java.time.*
 import java.time.format.DateTimeFormatter
