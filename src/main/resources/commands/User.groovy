@@ -11,21 +11,20 @@ import com.jagrosh.jdautilities.commons.utils.FinderUtil
 import decorators.BasicPerms
 import decorators.BirthdayBotAdminOnly
 
-import java.time.LocalDate
-import java.time.LocalTime
-import java.time.OffsetDateTime
-import java.time.ZoneOffset
+import java.time.*
 import java.time.format.DateTimeFormatter
+
+import static java.lang.System.*
 
 @Aliases(["me"])
 @Optional
 class User {
 
-    private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, YYYY O")
+    private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy O")
 
     @Cmd
     @BasicPerms
-    void set(CommandEvent event, String day, String month, String year, String gmtOffset) {
+    set(CommandEvent event, String day, String month, String year, String gmtOffset) {
         def ref = getUserRef(event.author.id)
 
         def date
@@ -41,9 +40,9 @@ class User {
 
         if(ref.get().get().exists()) {
             event.replyError("You have already set a birthday! " +
-                    "**You cannot change your birthday once it has been set to prevent abuse.** " +
-                    "If you have entered the wrong date, please contact a moderator in " +
-                    "[BirthdayBot Support](${System.getenv("DISCORD_SUPPORT_SERVER_INVITE")}).").queue()
+                "**You cannot change your birthday once it has been set to prevent abuse.** " +
+                "If you have entered the wrong date, please contact a moderator in " +
+                "[BirthdayBot Support](${getenv("DISCORD_SUPPORT_SERVER_INVITE")}).").queue()
             return
         }
 
@@ -52,19 +51,21 @@ class User {
             gmtOffset: date.offset.totalSeconds
         ])
 
-        event.reply("Successfully set your birthday to **${date.format(dateFormatter)}**!").queue()
+        return "Successfully set your birthday to **${date.format(dateFormatter)}**!"
     }
+
 
     @Cmd
     @BasicPerms
-    void set(CommandEvent event, String ignored) {
-        event.reply("Looks like your forgot a couple parameters! An example of the correct usage is: " +
-                "`bday set 30, 9, 1999, -4`").queue()
+    set(CommandEvent event, String ignored) {
+        return "Looks like your forgot a couple parameters! An example of the correct usage is: " +
+            "`bday set 30, 9, 1999, -4`"
     }
+
 
     @Cmd
     @BasicPerms
-    void get(CommandEvent event) {
+    get(CommandEvent event) {
         def dbUser = getDbUser(event.author.id)
         def date = dbUser?.birthdayStart
         if(date)
@@ -75,7 +76,7 @@ class User {
 
     @Cmd
     @BasicPerms
-    void get(CommandEvent event, String input) {
+    get(CommandEvent event, String input) {
         def user = FinderUtil.findMembers(input, event.guild)[0]?.user
         if(!user) {
             event.replyError("I couldn't find a person for that input :pensive:").queue()
@@ -84,14 +85,16 @@ class User {
 
         def dbUser = getDbUser(user.id)
         def date = dbUser?.birthdayStart
-        if(date)
-            event.reply(date.format(dateFormatter)).queue()
-        else
-            event.reply("That person hasn't set a birthday yet!").queue()
+
+        if(!date)
+            return "That person hasn't set a birthday yet!"
+
+        return dateFormatter.format(date)
     }
 
     @Cmd
     @BirthdayBotAdminOnly
+    @BasicPerms
     void reset(CommandEvent event, String input) {
         def user = FinderUtil.findMembers(input, event.guild)[0]?.user
         user ?= FinderUtil.findUsers(input, event.JDA)[0]
