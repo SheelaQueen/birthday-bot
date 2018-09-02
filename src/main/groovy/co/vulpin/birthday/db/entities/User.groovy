@@ -1,6 +1,6 @@
 package co.vulpin.birthday.db.entities
 
-import co.vulpin.firestore.sync.central.CentrallySyncedEntity
+
 import groovy.transform.InheritConstructors
 
 import java.time.Instant
@@ -8,10 +8,14 @@ import java.time.OffsetDateTime
 import java.time.ZoneOffset
 
 @InheritConstructors
-class User extends CentrallySyncedEntity {
+class User {
 
     Long birthdayEpochSeconds
     Integer gmtOffset
+
+    boolean hasBirthday() {
+        return birthdayEpochSeconds != null && gmtOffset != null
+    }
 
     boolean isBirthday() {
         def start = birthdayStart
@@ -28,15 +32,21 @@ class User extends CentrallySyncedEntity {
     }
 
     OffsetDateTime getBirthdayStart() {
+        if(!hasBirthday())
+            return null
+
         def instant = Instant.ofEpochSecond(birthdayEpochSeconds)
         return OffsetDateTime.ofInstant(instant, zoneOffset)
     }
 
     OffsetDateTime getBirthdayEnd() {
-        return birthdayStart.plusDays(1)
+        return birthdayStart?.plusDays(1)
     }
 
     ZoneOffset getZoneOffset() {
+        if(gmtOffset == null)
+            return null
+
         return ZoneOffset.ofTotalSeconds(gmtOffset)
     }
 

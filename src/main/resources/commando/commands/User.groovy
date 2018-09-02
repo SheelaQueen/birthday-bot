@@ -6,15 +6,18 @@ import co.vulpin.commando.CommandEvent
 import co.vulpin.commando.annotations.Aliases
 import co.vulpin.commando.annotations.Cmd
 import co.vulpin.commando.annotations.Optional
-import com.google.cloud.firestore.DocumentReference
 import com.jagrosh.jdautilities.commons.utils.FinderUtil
 import commando.decorators.BasicPerms
 import commando.decorators.BirthdayBotAdminOnly
 
-import java.time.*
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.OffsetDateTime
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
-import static java.lang.System.*
+import static com.google.cloud.firestore.SetOptions.merge
+import static java.lang.System.getenv
 
 @Aliases(["me"])
 @Optional
@@ -25,7 +28,7 @@ class User {
     @Cmd
     @BasicPerms
     set(CommandEvent event, String day, String month, String year, String gmtOffset) {
-        def ref = getUserRef(event.author.id)
+        def ref = db.getUserRef(event.author.id)
 
         def date
         try {
@@ -38,7 +41,8 @@ class User {
             return
         }
 
-        if(ref.get().get().exists()) {
+        def user = db.getUser(event.author.id)
+        if(user?.hasBirthday()) {
             event.replyError("You have already set a birthday! " +
                 "**You cannot change your birthday once it has been set to prevent abuse.** " +
                 "If you have entered the wrong date, please contact a moderator in " +
@@ -66,12 +70,15 @@ class User {
     @Cmd
     @BasicPerms
     get(CommandEvent event) {
-        def dbUser = getDbUser(event.author.id)
+        def dbUser = db.getUser(event.author.id)
         def date = dbUser?.birthdayStart
-        if(date)
-            event.reply(date.format(dateFormatter)).queue()
-        else
-            event.reply("You haven't set a birthday yet!").queue()
+
+        if(!date) {
+            event.replyError("You haven't set a birthday yet!").queue()
+            return
+        }
+
+        return date.format(dateFormatter)
     }
 
     @Cmd
@@ -83,7 +90,7 @@ class User {
             return
         }
 
-        def dbUser = getDbUser(user.id)
+        def dbUser = db.getUser(user.id)
         def date = dbUser?.birthdayStart
 
         if(!date)
@@ -104,7 +111,11 @@ class User {
             return
         }
 
-        getUserRef(user.id).delete()
+        db.getUserRef(user.id).set([
+            birthdayEpochSeconds: null,
+            gmtOffset: null
+        ], merge())
+
         event.reply("${user.asMention}'s birthday has been reset.").queue()
     }
 
@@ -125,13 +136,12 @@ class User {
         return birthday
     }
 
-    private DbUser getDbUser(String userId) {
-        def future = getUserRef(userId).get()
-        return future.get().toObject(DbUser)
+    private static Database getDb() {
+        return Database.instance
     }
 
-    private DocumentReference getUserRef(String userId) {
-        return Database.instance.getUserRef(userId)
+    private DbUser getDbUser(String userId) {
+        return Database.instance.getUser(userId)
     }
 
 }

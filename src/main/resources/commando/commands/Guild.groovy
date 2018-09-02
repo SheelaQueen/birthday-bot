@@ -1,18 +1,16 @@
 package commando.commands
 
 import co.vulpin.birthday.db.Database
-import co.vulpin.birthday.db.entities.Guild as DbGuild
 import co.vulpin.commando.CommandEvent
 import co.vulpin.commando.annotations.Aliases
 import co.vulpin.commando.annotations.Cmd
 import co.vulpin.commando.annotations.Optional
 import co.vulpin.commando.annotations.check.BotPerms
 import co.vulpin.commando.annotations.check.GuildAdminOnly
-import com.google.cloud.firestore.DocumentReference
-import com.google.cloud.firestore.SetOptions
 import com.jagrosh.jdautilities.commons.utils.FinderUtil
 import commando.decorators.BasicPerms
 
+import static com.google.cloud.firestore.SetOptions.merge
 import static net.dv8tion.jda.core.Permission.MANAGE_ROLES
 
 @Aliases(["server"])
@@ -31,9 +29,7 @@ class Guild {
             def role = FinderUtil.findRoles(roleQuery, event.guild)[0]
 
             if(role) {
-                getGuildRef(event).set([
-                    birthdayRoleId: role.id
-                ], SetOptions.merge())
+                db.getGuild(event.guild.id).birthdayRoleId = role.id
                 event.reply("The birthday role has been set to ${role.asMention}").queue()
             } else {
                 event.reply("I couldn't find a role for that name :pensive:").queue()
@@ -45,9 +41,9 @@ class Guild {
         @GuildAdminOnly
         @BasicPerms
         void remove(CommandEvent event) {
-            getGuildRef(event).set([
+            db.getGuildRef(event.guild.id).set([
                 birthdayRoleId: null
-            ], SetOptions.merge())
+            ], merge())
             event.reply("Removed this server's birthday role. " +
                     "It will no longer be assigned on people's birthdays.").queue()
         }
@@ -62,9 +58,9 @@ class Guild {
                     .setHoisted(true)
 
             roleAction.queue({
-                getGuildRef(event).set([
+                db.getGuildRef(event.guild.id).set([
                     birthdayRoleId: it.id
-                ], SetOptions.merge())
+                ], merge())
                 event.reply("Successfully created a birthday role.").queue()
             })
         }
@@ -73,11 +69,11 @@ class Guild {
         @Optional
         @BasicPerms
         void get(CommandEvent event) {
-            def dbGuild = getGuildRef(event).get().get().toObject(DbGuild)
+            def dbGuild = db.getGuild(event.guild.id)
             if(dbGuild.birthdayRoleId) {
                 def role = event.guild.getRoleById(dbGuild.birthdayRoleId)
                 if(role)
-                    event.reply("Birthday Role: ${role.asMention}").queue()
+                    event.reply(role.asMention).queue()
                 else
                     event.reply("It appears the current birthday role has been deleted. " +
                             "Please setup a new one.").queue()
@@ -86,8 +82,8 @@ class Guild {
             }
         }
 
-        private DocumentReference getGuildRef(CommandEvent event) {
-            return Database.instance.getGuildRef(event.guild.id)
+        private static Database getDb() {
+            return Database.instance
         }
 
     }
