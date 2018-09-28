@@ -18,6 +18,9 @@ class User {
     }
 
     boolean isBirthday() {
+        if(!hasBirthday())
+            return false
+
         def start = birthdayStart
         def end = birthdayEnd
 
