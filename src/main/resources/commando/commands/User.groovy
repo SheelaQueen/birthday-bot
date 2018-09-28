@@ -3,9 +3,8 @@ package commando.commands
 import co.vulpin.birthday.db.Database
 import co.vulpin.birthday.db.entities.User as DbUser
 import co.vulpin.commando.CommandEvent
-import co.vulpin.commando.annotations.Aliases
 import co.vulpin.commando.annotations.Cmd
-import co.vulpin.commando.annotations.Optional
+import co.vulpin.commando.annotations.Options
 import com.jagrosh.jdautilities.commons.utils.FinderUtil
 import commando.decorators.BasicPerms
 import commando.decorators.BirthdayBotAdminOnly
@@ -19,8 +18,10 @@ import java.time.format.DateTimeFormatter
 import static com.google.cloud.firestore.SetOptions.merge
 import static java.lang.System.getenv
 
-@Aliases(["me"])
-@Optional
+@Options(
+    aliases = ["me"],
+    optional = true
+)
 class User {
 
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy O")

@@ -6,6 +6,11 @@ plugins {
 
 mainClassName = 'co.vulpin.birthday.Main'
 
+shadowJar {
+    archiveName = "BirthdayBot.$extension"
+    destinationDir = new File("C:/Users/Nik/Desktop/BirthdayBot")
+}
+
 repositories {
     mavenCentral()
     jcenter()
@@ -23,7 +28,7 @@ dependencies {
     compile group: 'com.google.cloud', name: 'google-cloud-firestore', version: '0.55.1-beta'
 
     // Discord + Utils
-    compile group: 'co.vulpin',    name: 'commando',      version: '6398983'
+    compile group: 'co.vulpin',    name: 'commando',      version: '073abe7'
     compile group: 'net.dv8tion',  name: 'JDA',           version: '3.7.1_385'
     compile group: 'com.jagrosh',  name: 'jda-utilities', version: '2.1'
 

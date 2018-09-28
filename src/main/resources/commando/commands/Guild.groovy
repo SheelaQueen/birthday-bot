@@ -2,9 +2,8 @@ package commando.commands
 
 import co.vulpin.birthday.db.Database
 import co.vulpin.commando.CommandEvent
-import co.vulpin.commando.annotations.Aliases
 import co.vulpin.commando.annotations.Cmd
-import co.vulpin.commando.annotations.Optional
+import co.vulpin.commando.annotations.Options
 import co.vulpin.commando.annotations.check.BotPerms
 import co.vulpin.commando.annotations.check.GuildAdminOnly
 import com.jagrosh.jdautilities.commons.utils.FinderUtil
@@ -13,8 +12,10 @@ import commando.decorators.BasicPerms
 import static com.google.cloud.firestore.SetOptions.merge
 import static net.dv8tion.jda.core.Permission.MANAGE_ROLES
 
-@Aliases(["server"])
-@Optional
+@Options(
+    aliases = ["server"],
+    optional = true
+)
 class Guild {
 
     class Role {
@@ -22,14 +23,16 @@ class Guild {
         private static final BIRTHDAY_CAKE = "\uD83C\uDF82"
 
         @Cmd
+        @Options(optional = true)
         @GuildAdminOnly
-        @Optional
         @BasicPerms
         void set(CommandEvent event, String roleQuery) {
             def role = FinderUtil.findRoles(roleQuery, event.guild)[0]
 
             if(role) {
-                db.getGuild(event.guild.id).birthdayRoleId = role.id
+                db.getGuildRef(event.guild.id).set([
+                    birthdayRoleId: role.id
+                ], merge())
                 event.reply("The birthday role has been set to ${role.asMention}").queue()
             } else {
                 event.reply("I couldn't find a role for that name :pensive:").queue()
@@ -37,7 +40,7 @@ class Guild {
         }
 
         @Cmd
-        @Aliases(["disable", "stop"])
+        @Options(aliases = ["disable", "stop"])
         @GuildAdminOnly
         @BasicPerms
         void remove(CommandEvent event) {
@@ -66,7 +69,7 @@ class Guild {
         }
 
         @Cmd
-        @Optional
+        @Options(optional = true)
         @BasicPerms
         void get(CommandEvent event) {
             def dbGuild = db.getGuild(event.guild.id)

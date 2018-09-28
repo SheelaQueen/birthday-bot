@@ -2,7 +2,7 @@ package commando.commands
 
 import co.vulpin.commando.CommandEvent
 import co.vulpin.commando.annotations.Cmd
-import co.vulpin.commando.annotations.Optional
+import co.vulpin.commando.annotations.Options
 import commando.decorators.BasicPerms
 import net.dv8tion.jda.core.EmbedBuilder
 
@@ -11,7 +11,7 @@ class Help {
     private static final String SPACER = "\n\u200B"
 
     @Cmd
-    @Optional
+    @Options(optional = true)
     @BasicPerms
     get(CommandEvent event) {
         def embed = new EmbedBuilder().with {
